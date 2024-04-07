@@ -34,11 +34,11 @@ function main() {
     
   };
   
-  const template = `Song title: $protag $noun
-  \nYour $relationship with that special someone in your life turned into something $ending.
-  \nThat special person in your life was/is $adjective.
-  \nYou wish that you could $message them all the time about your life and everything good that happens to you.
-  \nYou are $certainty that this will work out.
+  const template = `Your song title is: $protag $noun.
+  Your $relationship with that special someone in your life turned into something $ending.
+  That special person in your life was/is $adjective.
+  You wish that you could $message them all the time about your life and everything good that happens to you.
+  You are $certainty that this will work out.
   `;
   
   
