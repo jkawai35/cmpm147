@@ -15,6 +15,14 @@ let myInstance;
 let canvasContainer;
 var centerHorz, centerVert;
 
+/* exported setup, draw */
+let seed = 0;
+let mouseXOffset = 0;
+
+let numLayers = 6;
+let mountainColors = ['#556B2F', '#6B8E23', '#228B22', '#32CD32', '#3CB371', '#90EE90']; // Green shades
+let valleyColor = '#2E8B57'; // Sea green color for the valley
+
 class MyClass {
     constructor(param1, param2) {
         this.property1 = param1;
@@ -53,27 +61,89 @@ function setup() {
 
 // draw() function is called repeatedly, it's the main animation loop
 function draw() {
-  background(220);    
-  // call a method on the instance
-  myInstance.myMethod();
+  randomSeed(seed);
+  background(100);
 
-  // Set up rotation for the rectangle
-  push(); // Save the current drawing context
-  translate(centerHorz, centerVert); // Move the origin to the rectangle's center
-  rotate(frameCount / 100.0); // Rotate by frameCount to animate the rotation
-  fill(234, 31, 81);
-  noStroke();
-  rect(-125, -125, 250, 250); // Draw the rectangle centered on the new origin
-  pop(); // Restore the original drawing context
+  let layerHeight = height / numLayers;
+  let startY = height / 3;
+  
+  // Simulate sunset
+  let sunsetColor = color(255, 165, 0); // Orange color for sunset
+  let topColor = color(135, 206, 235); // Light blue color for top of the sky
 
-  // The text is not affected by the translate and rotate
-  fill(255);
-  textStyle(BOLD);
-  textSize(140);
-  text("p5*", centerHorz - 105, centerVert + 40);
+  // Gradient background
+  setGradient(0, 0, width, startY, topColor, sunsetColor);
+
+  // Draw valley
+  fill(valleyColor);
+  rect(0, startY, width, height - startY);
+
+  // Draw mountain layers every time the mouse is moved
+  for (let i = 0; i < numLayers; i++) {
+    stroke(0); // Black outline
+    let colorIndex = int(random(mountainColors.length));
+    let mountainColor = mountainColors[colorIndex];
+    fill(mountainColor);
+    drawMountainLayer(startY + i * layerHeight, startY + (i + 1) * layerHeight, 0.01 + i * 0.005, 20, 50);
+  }
+
+  // Adjust mouseXOffset based on mouse position
+  mouseXOffset = map(mouseX, 0, width, -width * 0.25, width * 0.25); // Extend the range beyond the screen width
+  
+  let numBalloons = int(map(mouseX, 0, width, 20, 5)); // Decrease number of balloons as mouse moves to the right
+
+  // Draw hot air balloons
+  drawHotAirBalloons(numBalloons); // Draw 1 balloon
 }
 
-// mousePressed() function is called once after every time a mouse button is pressed
-function mousePressed() {
-    // code to run when mouse is pressed
+function drawMountainLayer(minY, maxY, noiseScale, jaggedness, stepSize) {
+  beginShape();
+  let yOffset = random(-20, 20);
+  for (let x = -width * 0.25; x <= width * 1.25; x += stepSize) { // Extend the range beyond the screen width
+    let y = map(noise((x + mouseXOffset) * noiseScale), 0, 1, minY, maxY); // Apply mouseXOffset to the x-coordinate
+    y += random(-jaggedness, jaggedness) * 0.5; // Reduce the range of jaggedness
+    y += yOffset; // Add random offset for overlapping effect
+    vertex(x, y);
+  }
+  endShape(CLOSE);
+}
+
+function setGradient(x, y, w, h, c1, c2) {
+  noFill();
+  for (let i = y; i <= y + h; i++) {
+    let inter = map(i, y, y + h, 0, 1);
+    let c = lerpColor(c1, c2, inter);
+    stroke(c);
+    line(x, i, x + w, i);
+  }
+}
+
+function drawHotAirBalloons(numBalloons) {
+  noStroke();
+  for (let i = 0; i < numBalloons; i++) {
+    let x = map(i, 0, numBalloons - 1, -width * 0.25, width * 1.25);  // Spread the balloons evenly across the extended range
+    let yNoise = random(10) + i * 0.1; // Random starting point for y noise, with slight variation for each balloon
+    let y = map(noise(yNoise), 0, 1, height * 0.33, height * 0.67); // Use Perlin noise for y position, spread horizontally
+    
+    // Calculate distance between balloon and cursor
+    let distanceToCursor = dist(x, y, mouseX, mouseY);
+
+    // Adjust balloon size based on distance to cursor
+    let size = map(distanceToCursor, 0, width, 60, 20); // Larger balloons closer to cursor, smaller balloons further away
+    let ellipseWidth = size * random(0.8, 1.2);
+    let ellipseHeight = size * random(1, 1.5);
+
+    // Balloon body
+    let balloonColor = color(random(255), random(255), random(255));
+    fill(balloonColor);
+    ellipse(x, y, ellipseWidth, ellipseHeight);
+
+    // Balloon basket
+    fill(139, 69, 19); // Brown
+    let basketWidth = size * 0.2;
+    let basketHeight = size * 0.3;
+    let basketX = x;
+    let basketY = y + ellipseHeight * 0.5;
+    rect(basketX - basketWidth / 2, basketY, basketWidth, basketHeight);
+  }
 }
