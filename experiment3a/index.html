@@ -2,7 +2,7 @@
 <html>
 <head>
    <!-- This title is used for tabs and bookmarks -->
-   <title>Experiment 3 - Alternate Worlds</title>
+   <title>Experiment 3a - Alternate Worlds 2</title>
 
 
    <!-- Use UTF character set, a good idea with any webpage -->
@@ -37,7 +37,7 @@
        <section>
 
 
-           <h1>Experiment 3 - Alternate Worlds</h1>
+           <h1>Experiment 3a - Alternate Worlds 2</h1>
 
 
            <div class="minor-section">
@@ -61,35 +61,34 @@
 
            <div class="minor-section">
                <h2>Description</h2>
-               <p>This geneartor was meant to create overworld maps that are similar to those
-				found in top down 2D games such as Pokemon, which is a game franchise that I actually based my project off of.
-				This geneartor has grass elements, "L", sand elements, "F",
-				water elements, "-", anh house elements, "H." With each seed a different map is created and I wanted to 
-				recreate the feel of a beach side city or a more rural area near bodies of water. There are also clouds that 
-				float and move over the screen to give the generator a more life-like feel as if you are far
-				above the world.
-			   </p>
+               <p>With this project, I was trying to create a dungeon generator that wouldcreate
+                a top down layout of rooms and paths that would represent a typical 2D
+                dungeon crawler game. The "." start for the outlines of the rooms and are 
+                made with the brick-like tiles. The "P" stands for path which conencts each room.
+                "C" stands for chest which can be found in each room. The animated shadow effect
+                is meant to simulate a stormy type night with lightning and how lightning causes
+                light to fade in and out of a scene.
+               </p>
            </div>
 
 
            <div class="minor-section">
                <h2>Technical</h2>
-               <p>This project useds noise to help determine which type of tile is placed in 
-				a pseudo-random fashion. Each house is programmed so what it cannot be placed on water for
-				any of the seeds given and can only be placed on water if the user edits the grid. The clouds were
-				created using rec() to create the shape of the cloud, and millis() was used for the clouds movein 
-				relation to time.
-				</p>
+               <p>This project uses noise to "randomly" place rooms using a function that 
+                create rectangles. A simple pathfinding function is also used to make the path that 
+                connect each room to eachother. A chest is then placed in every room. The shadow effect
+                is uses rect() to create the shapes that fade in and out based on time using millis().
+               </p>
            </div>
 
 
            <div class="minor-section">
                <h2>Reflection</h2>
-               <p>This project was completed without the help of other students from the class. ChatGPT was
-				used to help develop the cloud animation system since that was something that I didn't know how to implement
-				on my own and wanted to bring that idea to life. Using noise to make the generations more interesting was 
-				reasonably easy to implement and allowed me to make big progress in little time.
-			   </p>
+               <p>I worked on this project without the help of any students in the class.
+                ChatGPT was used to help with the animation and the pathfinding since I had a really hard time implementing those.
+                Figuring out the autotiling system was mainly done on my own and being able to use noise() to 
+                make each reseed more intersting was relatively easy to implement.
+               </p>
            </div>
 
 
