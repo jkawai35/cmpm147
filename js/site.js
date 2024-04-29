@@ -3,6 +3,7 @@
 // Date:
 
 // make sure document is ready
+
 $(document).ready(function() {
   console.log("Document ready.")
 
@@ -44,3 +45,4 @@ $(document).ready(function() {
   main();
 
 })
+

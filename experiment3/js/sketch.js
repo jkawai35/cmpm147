@@ -32,6 +32,13 @@ class MyClass {
     }
 }
 
+function resizeScreen() {
+  centerHorz = canvasContainer.width() / 2; // Adjusted for drawing logic
+  centerVert = canvasContainer.height() / 2; // Adjusted for drawing logic
+  console.log("Resizing...");
+  resizeCanvas(canvasContainer.width(), canvasContainer.height());
+  redrawCanvas(); // Redraw everything based on new size
+}
 
 let seed = 0;
 let tilesetImage;
@@ -77,13 +84,6 @@ function stringToGrid(str) {
   }
   return grid;
 }
-function resizeScreen() {
-  centerHorz = canvasContainer.width() / 2; // Adjusted for drawing logic
-  centerVert = canvasContainer.height() / 2; // Adjusted for drawing logic
-  console.log("Resizing...");
-  resizeCanvas(canvasContainer.width(), canvasContainer.height());
-  // redrawCanvas(); // Redraw everything based on new size
-}
 
 // setup() function is called once when the program starts
 function setup() {
@@ -101,13 +101,7 @@ function setup() {
 
   // create an instance of the class
   myInstance = new MyClass("VALUE1", "VALUE2");
-
-  /*
-  $(window).resize(function() {
-    resizeScreen();
-  });
-  resizeScreen();
-  */
+  
 }
 //place tile
 function placeTile(i, j, ti, tj) {
