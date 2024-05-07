@@ -45,7 +45,7 @@ function initDesign(inspiration) {
     imgHTML = `<img src="${inspiration.assetUrl}" style="width:${canvasWidth/2}px;">`
     $('#original').empty();
     $('#original').append(imgHTML);
-    numShapes = 170;
+    numShapes = 200;
     resizeCanvas(inspiration.image.width / 3, inspiration.image.height / 3); // Adjust the canvas resize factor to 10
     break;
   case "Cave":
